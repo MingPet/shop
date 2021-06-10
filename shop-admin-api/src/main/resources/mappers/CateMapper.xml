@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fh.shop.api.brand.mapper.ICateMapper">
+
+    <select id="findAllList" resultType="com.fh.shop.api.brand.po.Cate">
+        select id,cateName,pid,typeId,typeName from t_cate
+    </select>
+
+    <insert id="addCate" parameterType="com.fh.shop.api.brand.po.Cate">
+        insert into t_cate (cateName,pid,typeId,typeName) values
+        (#{cateName},#{pid},#{typeId},#{typeName})
+    </insert>
+
+    <delete id="deleteCate">
+        delete from t_cate where id in
+        <foreach collection="list" open="(" close=")" separator="," item="x">
+            #{x}
+        </foreach>
+    </delete>
+
+    <select id="findCate" resultType="com.fh.shop.api.brand.po.Cate" parameterType="long">
+        select id,cateName,pid,typeId,typeName from t_cate where id=#{v}
+    </select>
+
+    <update id="updateCate" parameterType="com.fh.shop.api.brand.po.Cate">
+        update t_cate set cateName=#{cateName},pid=#{pid},typeId=#{typeId},typeName=#{typeName}
+        where id = #{id}
+    </update>
+
+    <update id="updateTypeInfo" parameterType="com.fh.shop.api.brand.param.CateParam">
+        update t_cate set typeId=#{cate.typeId},typeName=#{cate.typeName} where id in
+        <foreach collection="idList" open="(" close=")" separator="," item="x">
+            #{x}
+
+        </foreach>
+    </update>
+</mapper>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id = "info">
+
+</div>
+
+<script src="js/jquery.min.js"></script>
+<script>
+    $(function () {
+        initBookSelect();
+    });
+    
+    function initBookSelect() {
+        var books = [{id:1,bookName:"我是谁"},{id:2,bookName:"我在哪"}];
+        var html = "<select><option value='-1'>请选择</option>"
+        for (var i = 0; i < books.length ; i++) {
+            var v_book = books[i];
+            html += "<option value='"+v_book.id+"'>"+v_book.bookName+"</option>"
+        }
+
+        html += "</select>";
+        $("#info").html(html);
+    }
+</script>
+</body>
+</html>

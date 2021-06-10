@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+  <div id="app">
+      图书名:<input  v-model="bookName">
+      价格:<input v-model="bookPrice">
+      <input type="button" value="增加图书" v-on:click="addBook();">
+      <input type="button" value="批量删除" @click="deleteBathBook();">
+      <input type="button" value="更新图书" @click="updateBook();">
+      <table border="1" v-show="books.length > 0">
+          <tr>
+              <th>图书名</th>
+              <th>价格</th>
+              <th>操作</th>
+          </tr>
+          <tr v-for="(book,index) in books">
+                <td>{{book.bookName}}</td>
+                <td>{{book.bookPrice}}</td>
+              <td><input type="button" @click="deleteBook(index);" value="删除"></td>
+              <td><input type="button" @click="findBook(index);" value="编辑"></td>
+          </tr>
+      </table>
+      <h2 v-show = "books.length == 0">数据为空！</h2>
+  </div>
+
+<script src="js/vue.min.js"></script>
+
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            bookName:"",
+            bookPrice:"",
+            books:[],
+            bookIndex:-1
+        },
+        methods:{
+            addBook(){
+                var book ={};
+                book.bookName = this.bookName;
+                book.bookPrice = this.bookPrice;
+                //往数组里添加数据用push
+                this.books.push(book);
+                this.bookName = "";
+                this.bookPrice = "";
+            },
+            deleteBook(i){
+                //删除数组中的数据 split(下标，删除的下表)
+                this.books.splice(i,1);
+            },
+            deleteBathBook(){
+                //批删
+                this.books = [];
+            },
+            findBook(i){
+                //回填
+              var v_book = this.books[i]
+                this.bookName = v_book.bookName;
+                this.bookPrice = v_book.bookPrice;
+                this.bookIndex = i;
+            },
+            updateBook(){
+                this.books[this.bookIndex].bookName = this.bookName;
+                this.books[this.bookIndex].bookPrice = this.bookPrice;
+                this.bookName="";
+                this.bookPrice="";
+            }
+        }
+    })
+</script>
+</body>
+</html>

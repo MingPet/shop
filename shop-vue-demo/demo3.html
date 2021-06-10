@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="box">
+    <!--{{}}代表直接可以获取key的值-->
+    <span>{{msg}}</span>
+</div>
+<script src="js/vue.min.js"></script>
+
+
+<script>
+    new Vue({
+        el:"#box",
+        data:{
+            msg:"lalalalalalalala",//对应的数据模型中的key
+
+        }
+    })
+</script>
+</body>
+</html>

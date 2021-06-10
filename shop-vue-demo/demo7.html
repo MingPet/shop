@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>测试</title>
+</head>
+<body>
+
+    <div id="app">
+        图书名:<input  v-model="book.bookName">
+        价格:<input v-model="book.price">
+        <br>
+        <input type="button" value="增加图书" v-on:click="addBook();">
+        <input type="button" value="批量删除" @click="deleteBathBook();">
+        <input type="button" value="更新图书" @click="updateBook();">
+        颜色:<input type="text" value="颜色" v-model="colorInfo">
+        字体大小:<input type="text"  v-model="fontSizeInfo">
+        <table v-show="condition" border="1" cellpadding="0px" cellspacing="0px" width="400px"
+         :style="{color: colorInfo,fontSize:fontSizeInfo}">
+            <tr align="center">
+                <th>选择</th>
+                <th>图书名</th>
+                <th>图书价格</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="book in books" align="center">
+
+                <td>
+                    <input type="checkbox" v-model="book.check">
+                </td>
+               
+                <td>
+                    {{book.bookName}}
+                </td>
+                <td>
+                    {{book.price}}
+                </td>
+                <td>
+                    <input type="button" value="删除" @click="deleteBook(book.id)">
+                    <input type="button" value="修改" @click="findBook(book.id)">
+                </td>
+
+            </tr>
+        </table>
+        <input type="button" value="全选" @click="cheakAll">
+        <input type="button" value="反选" @click="reverseCheck">
+        <input type="button" value="选中删除" @click="deleteCheck">
+    </div>
+
+    <script src="js/vue.min.js"></script>
+
+    
+    <script>
+        new Vue({
+            el:"#app",
+            data() {
+                return {
+                    book:{},
+                    start:50,
+                    condition:true,
+                    selectArr:[],
+                    colorInfo:"red",
+                    fontSizeInfo:"16px",
+                    books:[
+                        {id:1,bookName:"春种一粒粟",price:12,check:false},
+                        {id:2,bookName:"秋收万颗子",price:17,check:false},
+                        {id:3,bookName:"四海无闲田",price:42,check:false},
+                        {id:4,bookName:"农夫犹饿死",price:45,check:false},
+                    ]
+                }
+            },
+            methods: {
+                addBook(){
+                    this.book.id=this.start++;
+                    this.books.push(this.book);
+                    this.book= {};
+                },
+                deleteBook(id){
+                   
+                    this.books.splice(this.books.findIndex(y => y.id==id),1);
+                    if(this.books.length == 0){
+                        this.condition = false;
+                    }
+                   
+                },
+                findBook(id){
+                    this.book=this.books[this.books.findIndex(z => z.id==id)];
+                },
+                updateBook(){
+                    this.book={};
+                },
+                cheakAll(){
+                    this.books.forEach(b => {
+                        b.check=true;
+                    });
+                },
+                reverseCheck(){
+                    this.books.forEach( x => {
+                        x.check=!x.check;
+                    });
+                },
+                deleteBathBook(){
+                    this.books = [];
+                    if(this.books.length == 0){
+                        this.condition = false;
+                    }
+                },
+                deleteCheck(){
+                    for(let i=this.books.length-1;i>=0;i--) {
+                        if (this.books[i].check) {
+                            this.books.splice(i,1)
+                        }
+                        if(this.books.length == 0){
+                        this.condition = false;
+                        }
+                    }
+                }
+               
+            },
+           
+        })
+    </script>
+</body>
+</html>

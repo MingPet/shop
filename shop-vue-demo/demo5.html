@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    学生名：<input v-model="stuName" >
+    年龄：<input v-model="age">
+    <input type="button" value="增加学生" v-on:click="addUser();">
+    <table border="1" >
+        <tr>
+            <td>学生名</td>
+            <td>年龄</td>
+        </tr>
+        <tr v-for="s in students">
+            <td>{{s.stuNameaaa}}</td>
+            <td>{{s.agebbb}}</td>
+        </tr>
+    </table>
+</div>
+<script src="js/vue.min.js"></script>
+
+
+<script>
+    new Vue({
+        el:"#app",
+        data:{
+            stuName:"",//双向绑定  初始值为 空的字符串
+            age:"",
+            students:[],
+        },
+        methods:{
+            addUser(){
+                var user = {};
+                user.stuNameaaa = this.stuName;
+                user.agebbb = this.age;
+                this.students.push(user);
+                this.stuName="";//清空输入框
+                this.age="";
+
+            }
+        }
+    })
+</script>
+</body>
+</html>

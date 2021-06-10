@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id ="app">
+    <ul>
+        <li v-for="name in names">
+            {{name}}
+        </li>
+    </ul>
+    <ul>
+        <li v-for="(x,y) in student">
+            {{y}}:{{x}}
+
+        </li>
+    </ul>
+    <table border="1">
+        <tr>
+           <td>学生名</td>
+           <td>年龄</td>
+           <td>性别</td>
+        </tr>
+        <tr v-for = "student in students">
+            <td>{{student.stuName}}</td>
+            <td>{{student.age}}</td>
+            <td>{{student.sex}}</td>
+        </tr>
+    </table>
+</div>
+
+<script src="js/vue.min.js"></script>
+</body>
+
+<script>
+
+    new Vue({
+        el:"#app",
+        data:{
+            names:["11","22","33"],
+            student:{stuName:"张三",age:"18",sex:"女"},
+            students:[{stuName:"张三",age:"17",sex:"女"},{stuName:"李四",age:"18",sex:"男"},{stuName:"王奇",age:"18",sex:"女"}]
+        }
+    })
+</script>
+</html>

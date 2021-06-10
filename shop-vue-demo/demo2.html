@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id = "info">
+
+    <select>
+        <option value="-1">--请选择--</option>
+        <option v-for="book in books" :value="book.id ">
+            {{book.bookName}}
+        </option>
+    </select>
+</div>
+
+<script src="js/vue.min.js"></script>
+
+<script>
+    new Vue({
+        el:"#info",
+        data:{
+            books:[{id:1,bookName:"我是谁"},{id:2,bookName:"我在哪"}]
+        }
+    })
+
+</script>
+</body>
+</html>

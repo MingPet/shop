@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fh.shop.api.type.mapper.ITypeMapper">
+
+    <insert id="addType" parameterType="com.fh.shop.api.type.po.Type">
+      <selectKey keyProperty="id" resultType="long" order="AFTER">
+          select last_insert_id()
+      </selectKey>
+        insert into t_type (typeName) values (#{typeName})
+    </insert>
+
+    <select id="findCount" parameterType="com.fh.shop.api.type.param.TypeQueryParam" resultType="long">
+        select count(*) from t_type
+    </select>
+
+    <select id="findList" parameterType="com.fh.shop.api.type.param.TypeQueryParam" resultType="com.fh.shop.api.type.po.Type">
+        select t.* from
+        (select id,typeName from t_type order by id desc) t
+        limit #{start},#{length}
+    </select>
+
+    <select id="findType" resultType="com.fh.shop.api.type.po.Type" parameterType="long">
+        select id,typeName from t_type where id=#{v};
+    </select>
+
+    <update id="updateType" parameterType="com.fh.shop.api.type.po.Type">
+        update t_type set typeName=#{typeName} where id=#{id}
+    </update>
+
+    <delete id="deleteTypeById" parameterType="long">
+        delete  from t_type where id = #{v}
+    </delete>
+
+    <delete id="deleteBatch">
+        delete from t_type where id in
+        <foreach collection="list" item="x" separator="," open="(" close=")">
+            #{x}
+        </foreach>
+    </delete>
+
+    <select id="findAllTypeList" resultType="com.fh.shop.api.type.po.Type">
+        select id,typeName from t_type
+    </select>
+
+
+
+</mapper>

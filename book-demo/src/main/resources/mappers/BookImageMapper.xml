@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fh.shop.bookdemo.book.mapper.IBookImageMapper">
+
+<insert id="addBatch">
+    insert into t_book_image (bookId,imagePath) values
+    <foreach collection="list" item="x" separator=",">
+        (#{x.bookId},#{x.imagePath})
+    </foreach>
+</insert>
+
+
+
+
+
+
+</mapper>

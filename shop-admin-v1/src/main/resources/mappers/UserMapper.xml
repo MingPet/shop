@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fh.shop.admin.mapper.user.IUserMapper">
+
+    <select id="findUserByUserName" parameterType="string" resultType="com.fh.shop.admin.po.user.User">
+        select id,userName,realName,password,salt,loginCount,loginLastTime,loginThisTime from t_user where userName=#{v}
+    </select>
+
+    <sql id="userWhere">
+        <where>
+            <if test = "userName !=null and userName !=''">
+                and userName like concat('%',#{userName},'%')
+            </if>
+            <if test = "realName !=null and realName !=''">
+                and realName like concat('%',#{realName},'%')
+            </if>
+            <if test="minDate != null">
+                and birthDay >= #{minDate}
+            </if>
+            <if test="maxDate != null">
+                and birthDay &lt;= #{maxDate}
+            </if>
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+        </where>
+    </sql>
+
+    <select id="findListCount" parameterType="com.fh.shop.admin.param.UserQueryParam" resultType="long">
+   select count(*) from t_user
+    <include refid="userWhere"></include>
+  </select>
+
+    <select id="findPageList" parameterType="com.fh.shop.admin.param.UserQueryParam" resultType="com.fh.shop.admin.po.user.User">
+        select t.* from
+        (select id,userName,realName,photo,sex,mail,phone,birthDay from t_user
+        <include refid="userWhere"></include>
+        order by id desc)t limit #{start},#{length}
+    </select>
+
+    <select id="findUserById" parameterType="long" resultType="com.fh.shop.admin.po.user.User">
+        select id,userName,realName,photo,sex,mail,phone,birthDay,password,confirmPassword,loginCount,loginTime from t_user where id =#{v}
+    </select>
+    
+    <select id="addBatch">
+        insert into t_user (userName,realName,sex,mail,phone,birthDay) values
+        <foreach collection="list" separator="," item="x">
+            (#{x.userName},#{x.realName},#{x.sex},#{x.mail},#{x.phone},#{x.birthDay})
+        </foreach>
+    </select>
+
+
+</mapper>
