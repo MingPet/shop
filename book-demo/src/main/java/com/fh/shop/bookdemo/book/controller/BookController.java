@@ -24,7 +24,9 @@ public class BookController {
     @PostMapping(value = "/add")
     public ServerResponse add(@RequestBody BookParam bookParam){
 
+        System.out.println("cccccccccccccccccssssssssssssss");
         return bookService.addBook(bookParam);
+
 
     }
 
